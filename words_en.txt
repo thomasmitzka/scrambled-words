@@ -1,0 +1,6 @@
+ice,man,sun,sky,day,ash
+face,book,milk,rock,door,bird,bank
+cloud,light,chair,tooth,apple,bread
+people,butter,banana,candle,finger,answer
+country,penguin,diamond,monster,freedom
+universe,airplane,computer,sandwich,princess

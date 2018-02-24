@@ -1,0 +1,6 @@
+tag,hut,ast,axt,box,kuh,uhr,eis
+wald,zahn,zelt,hund,fluss,ball,jahr,hand
+nacht,stern,jacke,regen,sommer,apfel,paket,katze
+himmel,rakete,fackel,schiff,sommer,teller,kirche
+diamant,legende,fahrrad,inserat,million
+krawatte,mikrofon,pyramide,fantasie,skorpion
