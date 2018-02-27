@@ -209,8 +209,7 @@ class ScrambledWords():
 
         if self.score:
             if ((len(scorelist) < 10) or
-                    (len(scorelist) >= 10 and self.score >= scorelist[-1][0])
-                ):
+                    (len(scorelist) >= 10 and self.score >= scorelist[-1][0])):
                 scorelist = self.add_highscore(scorelist)
 
         time.sleep(4)
