@@ -209,7 +209,8 @@ class ScrambledWords():
 
         if self.score:
             if ((len(scorelist) < 10) or
-                    (len(scorelist) >= 10 and self.score >= scorelist[-1][0])):
+                    (len(scorelist) >= 10 and self.score >= scorelist[-1][0])
+                ):
                 scorelist = self.add_highscore(scorelist)
 
         time.sleep(4)
@@ -242,7 +243,7 @@ class ScrambledWords():
         scorelist = sorted(scorelist, reverse=True)
 
         # Convert score values from integer to string,
-        # so the list can be joined and written to file.
+        # so they can be joined and written to file.
         for item in scorelist:
             item[0] = str(item[0])
 
