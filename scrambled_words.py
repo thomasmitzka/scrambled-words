@@ -295,7 +295,7 @@ INSTRUCTIONS = True
 LEVELS = 6
 
 # Maximum number of guesses per word:
-MAX_GUESSES = 3
+MAX_GUESSES = 2
 
 # Time limit for bonus points in seconds:
 TIME_LIMIT = 10
