@@ -258,7 +258,8 @@ class ScrambledWords():
         """Show instructions and call game methods.
 
         Check whether there are enough lines in the word file for the
-        chosen number of levels."""
+        chosen number of levels.
+        """
         if LEVELS > len(self.words):
             print("There are only {} sets of words for {} levels!".format(
                 len(self.words), LEVELS
