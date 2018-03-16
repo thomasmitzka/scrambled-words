@@ -4,9 +4,8 @@
 
 The player has to guess the correct order of letters in a word
 throughout several levels. Scrambled words are created from a text
-file or, alternatively, from a list of default words. Each level
-presents a more difficult word scramble. After a limited number of
-guesses, the level ends.
+file. Each level presents a more difficult word scramble. After a
+limited number of guesses, the level ends.
 
 Once in every game, the player can get a hint to help in guessing the
 word. In the end, the player receives points for solved words, and
@@ -46,16 +45,14 @@ class ScrambledWords():
 
     @staticmethod
     def get_words():
-        """Return list of random words.
-
-        Read words from file, or use default words.
-        """
+        """Read words from file and return a list of random words."""
         try:
             with open(WORD_FILE, "r") as file:
                 lines = [line.strip().split(",") for line in file]
         except FileNotFoundError:
-            print("No word file found. Default words will be used.\n")
-            lines = DEFAULT_WORDS
+            print("Word file {} could not be read!".format(
+                WORD_FILE
+            ))
         words = [random.choice(element).upper() for element in lines]
         return words
 
@@ -306,18 +303,8 @@ TIME_LIMIT = 10
 # Name of highscore file (will be created if required):
 HSCORE_FILE = "highscores.txt"
 
-# Name of word file (optional):
+# Name of word file
 WORD_FILE = "words_en.txt"
-
-# Use default words if no word file is found:
-DEFAULT_WORDS = [
-    ["cat", "sun", "man"],
-    ["rock", "milk", "book"],
-    ["cloud", "light", "apple"],
-    ["people", "candle", "banana"],
-    ["country", "penguin", "diamond"],
-    ["universe", "computer", "sandwich"],
-]
 
 ######################################################################
 
