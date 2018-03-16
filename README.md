@@ -12,7 +12,6 @@ bonus points for completing levels within a time limit. When the first
 highscore is achieved, the game creates a text file to store highscore
 entries.
 
-Word files in English and German are included.
-
-If you change or create word files, make sure that there are only
-commas between words, no empty spaces or other characters.
+Word files in English and German are included. If you change or create
+word files, make sure that there are only commas between words, no
+empty spaces or other characters.
