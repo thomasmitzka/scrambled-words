@@ -50,9 +50,7 @@ class ScrambledWords():
             with open(WORD_FILE, "r") as file:
                 lines = [line.strip().split(",") for line in file]
         except FileNotFoundError:
-            print("Word file {} could not be read!".format(
-                WORD_FILE
-            ))
+            print("Word file {} could not be read!".format(WORD_FILE))
         words = [random.choice(element).upper() for element in lines]
         return words
 
@@ -209,8 +207,7 @@ class ScrambledWords():
             scorelist = []
 
         if self.score:
-            if ((len(scorelist) < 10) or
-                    (len(scorelist) >= 10 and self.score >= scorelist[-1][0])):
+            if (len(scorelist) < 10) or (self.score >= scorelist[-1][0]):
                 scorelist = self.add_highscore(scorelist)
 
         time.sleep(4)
@@ -250,7 +247,7 @@ class ScrambledWords():
             converted_scorelist.append([str(points), player])
         scorelist = converted_scorelist
 
-        lines = [";".join(item) for item in scorelist]
+        lines = [";".join(entry) for entry in scorelist]
 
         with open(HSCORE_FILE, "w") as file:
             for line in lines:
@@ -264,7 +261,7 @@ class ScrambledWords():
     def play(self):
         """Show instructions and call game methods.
 
-        Check whether there are enough lines in the word file for the
+        Make sure there are enough lines in the word file for the
         chosen number of levels.
         """
         if LEVELS > len(self.words):
