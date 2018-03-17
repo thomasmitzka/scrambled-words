@@ -197,10 +197,14 @@ class ScrambledWords():
         try:
             with open(HSCORE_FILE, "r") as file:
                 scorelist = [line.strip().split(";") for line in file]
-                # Convert the score numbers to integer,
+
+                # Convert score numbers to integer,
                 # so they can be compared and sorted.
+                converted_scorelist = []
                 for entry in scorelist:
-                    entry[0] = int(entry[0])
+                    points, player = entry
+                    converted_scorelist.append([int(points), player])
+                scorelist = converted_scorelist
         except FileNotFoundError:
             scorelist = []
 
@@ -227,21 +231,24 @@ class ScrambledWords():
         """
         print("\n** NEW HIGHSCORE **")
         print("Please enter your name:")
-        username = ""
-        while username == "":
-            username = input("> ")
-        print("\nCongratulations, {}!".format(username))
+        player = ""
+        while player == "":
+            player = input("> ")
+        print("\nCongratulations, {}!".format(player))
 
         while len(scorelist) >= 10:
             scorelist.pop()
 
-        scorelist.append([self.score, username])
+        scorelist.append([self.score, player])
         scorelist = sorted(scorelist, reverse=True)
 
         # Convert score values from integer to string,
         # so they can be joined and written to file.
-        for item in scorelist:
-            item[0] = str(item[0])
+        converted_scorelist = []
+        for entry in scorelist:
+            points, player = entry
+            converted_scorelist.append([str(points), player])
+        scorelist = converted_scorelist
 
         lines = [";".join(item) for item in scorelist]
 
