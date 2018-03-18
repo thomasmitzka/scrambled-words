@@ -266,7 +266,7 @@ class ScrambledWords():
                     TIME_LIMIT
                 ))
                 print("you receive bonus points. Press 'H' to see a hint.")
-                print("\nDo your best and try do enter the highscore list!")
+                print("\nDo your best and try to enter the highscore list!")
                 time.sleep(6)
 
             while self.level < LEVELS:
