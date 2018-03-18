@@ -9,7 +9,7 @@ limited number of guesses, the level ends.
 Once in every game, the player can get a hint to help in guessing the
 word. In the end, the player receives points for solved words, and
 bonus points for completing levels within a time limit. When the first
-highscore is achieved, the game creates a file to store highscore
+highscore is achieved, the game creates a JSON file to store highscore
 entries.
 
 Word files in English and German are included. If you change or create

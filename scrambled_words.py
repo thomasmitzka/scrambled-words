@@ -1,18 +1,6 @@
 #!/usr/bin/env python3
 
-"""Scrambled Words is a text-based word guessing game.
-
-The player has to guess the correct order of letters in a word
-throughout several levels. Scrambled words are created from a text
-file. Each level presents a more difficult word scramble. After a
-limited number of guesses, the level ends.
-
-Once in every game, the player can get a hint to help in guessing the
-word. In the end, the player receives points for solved words, and
-bonus points for completing levels within a time limit. When the first
-highscore is achieved, the game creates a JSON file to store highscore
-entries.
-"""
+"""Scrambled Words is a text-based word guessing game."""
 
 import random
 import time
@@ -41,15 +29,15 @@ class ScrambledWords():
         self.score = 0
 
     def __repr__(self):
-        """Return information on class."""
-        return "A text-based word guessing game."
+        """Provide information on this class."""
+        return "Scrambled Words is a text-based word guessing game."
 
     @staticmethod
     def get_words():
         """Read words from file and return a list of random words."""
         try:
-            with open(WORD_FILE, "r") as file:
-                lines = [line.strip().split(",") for line in file]
+            with open(WORD_FILE, "r") as word_file:
+                lines = [line.strip().split(",") for line in word_file]
         except FileNotFoundError:
             print("Word file {} could not be read!".format(WORD_FILE))
         words = [random.choice(element).upper() for element in lines]
@@ -194,8 +182,8 @@ class ScrambledWords():
         lowest (= last) entry in the list.
         """
         try:
-            with open(HSCORE_FILE, "r") as f:
-                scorelist = json.load(f)
+            with open(HSCORE_FILE, "r") as hscore_file:
+                scorelist = json.load(hscore_file)
 
                 # Convert score numbers to integer,
                 # so they can be compared and sorted.
@@ -249,8 +237,8 @@ class ScrambledWords():
             converted_scorelist.append([str(points), player])
         scorelist = converted_scorelist
 
-        with open(HSCORE_FILE, "w") as f:
-            json.dump(scorelist, f)
+        with open(HSCORE_FILE, "w") as hscore_file:
+            json.dump(scorelist, hscore_file)
         if len(scorelist) == 1:
             print("Highscore file created.")
         else:
