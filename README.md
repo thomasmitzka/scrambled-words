@@ -1,4 +1,4 @@
-# scrambled-words
+# Scrambled Words
 A text-based word guessing game.
 
 This game lets you try and guess the correct order of letters in a word
