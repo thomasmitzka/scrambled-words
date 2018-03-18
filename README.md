@@ -1,17 +1,16 @@
 # scrambled-words
 A text-based word guessing game.
 
-The player has to guess the correct order of letters in a word
-throughout several levels. Scrambled words are created from a text
-file. Each level presents a more difficult word scramble. After a
-limited number of guesses, the level ends.
+This game lets you try and guess the correct order of letters in a word
+throughout several levels. Scrambled words are created from a text file.
+Each level presents a more difficult word scramble. After a limited
+number of guesses, the level ends.
 
-Once in every game, the player can get a hint to help in guessing the
-word. In the end, the player receives points for solved words, and
-bonus points for completing levels within a time limit. When the first
-highscore is achieved, the game creates a JSON file to store highscore
-entries.
+Once in every game, you can get a hint by pressing "H". When all levels
+are completed, you receive points for solved words, and bonus points for
+guessing words within a time limit. Highscore entries are stored in a
+JSON file.
 
-Word files in English and German are included. If you change or create
-word files, make sure that there are only commas between words, no
-empty spaces or other characters.
+Word files in English and German are included. If you change them or
+create your own word files, make sure that there are only commas between
+words, no empty spaces or other characters.
