@@ -10,12 +10,13 @@ limited number of guesses, the level ends.
 Once in every game, the player can get a hint to help in guessing the
 word. In the end, the player receives points for solved words, and
 bonus points for completing levels within a time limit. When the first
-highscore is achieved, the game creates a text file to store highscore
+highscore is achieved, the game creates a JSON file to store highscore
 entries.
 """
 
 import random
 import time
+import json
 
 
 class ScrambledWords():
@@ -188,13 +189,13 @@ class ScrambledWords():
 
         If a new highscore has been achieved, save the player's name
         and score by calling method add_highscore(). Highscores are
-        stored in a text file. There can only be 10 highscore entries
+        stored in a JSON file. There can only be 10 highscore entries
         at a time. A new highscore must at least be as high as the
         lowest (= last) entry in the list.
         """
         try:
-            with open(HSCORE_FILE, "r") as file:
-                scorelist = [line.strip().split(";") for line in file]
+            with open(HSCORE_FILE, "r") as f:
+                scorelist = json.load(f)
 
                 # Convert score numbers to integer,
                 # so they can be compared and sorted.
@@ -215,6 +216,7 @@ class ScrambledWords():
         if scorelist:
             for entry in scorelist:
                 print("{}\t{}".format(entry[0], entry[1]))
+            print()
         else:
             print("No entries yet.")
             print("Start a new game and achieve the first highscore!")
@@ -247,13 +249,10 @@ class ScrambledWords():
             converted_scorelist.append([str(points), player])
         scorelist = converted_scorelist
 
-        lines = [";".join(entry) for entry in scorelist]
-
-        with open(HSCORE_FILE, "w") as file:
-            for line in lines:
-                file.write(line + "\n")
-        if len(lines) == 1:
-            print("Highscore file {} created.".format(HSCORE_FILE))
+        with open(HSCORE_FILE, "w") as f:
+            json.dump(scorelist, f)
+        if len(scorelist) == 1:
+            print("Highscore file created.")
         else:
             print("Highscore file updated.")
         return scorelist
@@ -305,11 +304,11 @@ MAX_GUESSES = 2
 # Time limit for bonus points in seconds:
 TIME_LIMIT = 10
 
-# Name of highscore file (will be created if required):
-HSCORE_FILE = "highscores.txt"
-
 # Name of word file
 WORD_FILE = "words_en.txt"
+
+# Name of highscore file (will be created if required):
+HSCORE_FILE = "highscores.json"
 
 ######################################################################
 
