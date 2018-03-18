@@ -283,7 +283,7 @@ class ScrambledWords():
 # Show instructions at the beginning:
 INSTRUCTIONS = True
 
-# Number of levels (must not exceed number of lines in word file):
+# Number of levels (must not exceed the number of lines in word file):
 LEVELS = 6
 
 # Maximum number of guesses per word:
@@ -292,7 +292,7 @@ MAX_GUESSES = 2
 # Time limit for bonus points in seconds:
 TIME_LIMIT = 10
 
-# Name of word file
+# Name of word file:
 WORD_FILE = "words_en.txt"
 
 # Name of highscore file (will be created if required):
