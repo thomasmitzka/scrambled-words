@@ -185,7 +185,7 @@ class ScrambledWords():
             with open(HSCORE_FILE, "r") as hscore_file:
                 scorelist = json.load(hscore_file)
 
-                # Convert score numbers to integer,
+                # Convert score numbers from string to integer,
                 # so they can be compared and sorted.
                 converted_scorelist = []
                 for entry in scorelist:
@@ -229,7 +229,7 @@ class ScrambledWords():
         scorelist.append([self.score, player])
         scorelist = sorted(scorelist, reverse=True)
 
-        # Convert score values from integer to string,
+        # Convert score numbers from integer to string,
         # so they can be joined and written to file.
         converted_scorelist = []
         for entry in scorelist:
