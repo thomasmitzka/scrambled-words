@@ -230,7 +230,7 @@ class ScrambledWords():
         scorelist = sorted(scorelist, reverse=True)
 
         # Convert score numbers from integer to string,
-        # so they can be joined and written to file.
+        # so they can be written to file.
         converted_scorelist = []
         for entry in scorelist:
             points, player = entry
