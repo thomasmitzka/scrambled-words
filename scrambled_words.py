@@ -306,7 +306,7 @@ MAX_GUESSES = 2
 TIME_LIMIT = 10
 
 # Name of word file:
-WORD_FILE = "words_en.txt2"
+WORD_FILE = "words_en.txt"
 
 # Name of highscore file (will be created if required):
 HSCORE_FILE = "highscores.json"
