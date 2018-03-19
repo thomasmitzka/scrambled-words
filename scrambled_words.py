@@ -46,8 +46,6 @@ class ScrambledWords():
             with open(WORD_FILE, "r") as word_file:
                 lines = [line.strip().split(",") for line in word_file]
         except FileNotFoundError:
-            print("The word file {} couldn't be found!".format(WORD_FILE))
-            print("Please make sure that the file is readable.")
             return None
         else:
             words = [random.choice(element).upper() for element in lines]
@@ -263,7 +261,8 @@ class ScrambledWords():
         """
 
         if not self.words:
-            pass
+            print("The word file {} couldn't be read!".format(WORD_FILE))
+            print("Rename it or change the expected file name (WORD_FILE).")
         elif LEVELS > len(self.words):
             print("There are only {} sets of words for {} levels!".format(
                 len(self.words), LEVELS
@@ -306,7 +305,7 @@ MAX_GUESSES = 2
 TIME_LIMIT = 10
 
 # Name of word file:
-WORD_FILE = "words_en.txt"
+WORD_FILE = ".words_en.txt"
 
 # Name of highscore file (will be created if required):
 HSCORE_FILE = "highscores.json"
