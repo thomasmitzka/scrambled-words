@@ -3,9 +3,9 @@
 """Scrambled Words is a text-based word guessing game.
 
 For further information on this game and how to play it, please read the
-included file 'README.md'. By default, playing instructions
-are shown at the beginning. You can change the game by altering the
-variables at the bottom of this module.
+included file 'README.md'. By default, playing instructions are shown at
+the beginning. You can change the game by altering the options at the
+bottom of this module.
 """
 
 import random
