@@ -28,7 +28,8 @@ class ScrambledWords():
         of scrambled words.
         """
         self.words = self.get_words()
-        self.scrambled_words = self.scramble()
+        if self.words:
+            self.scrambled_words = self.scramble()
         self.level = 0
         self.hint = True
         self.times = []
@@ -45,9 +46,12 @@ class ScrambledWords():
             with open(WORD_FILE, "r") as word_file:
                 lines = [line.strip().split(",") for line in word_file]
         except FileNotFoundError:
-            print("Word file {} could not be read!".format(WORD_FILE))
-        words = [random.choice(element).upper() for element in lines]
-        return words
+            print("The word file {} couldn't be found!".format(WORD_FILE))
+            print("Please make sure that the file is readable.")
+            return None
+        else:
+            words = [random.choice(element).upper() for element in lines]
+            return words
 
     def scramble(self):
         """Scramble words in list, and return list."""
@@ -254,10 +258,13 @@ class ScrambledWords():
     def play(self):
         """Show instructions and call game methods.
 
-        Make sure there are enough lines in the word file for the
-        chosen number of levels.
+        Make sure the word file is available and contains enough lines
+        for the chosen number of levels.
         """
-        if LEVELS > len(self.words):
+
+        if not self.words:
+            pass
+        elif LEVELS > len(self.words):
             print("There are only {} sets of words for {} levels!".format(
                 len(self.words), LEVELS
             ))
@@ -299,7 +306,7 @@ MAX_GUESSES = 2
 TIME_LIMIT = 10
 
 # Name of word file:
-WORD_FILE = "words_en.txt"
+WORD_FILE = "words_en.txt2"
 
 # Name of highscore file (will be created if required):
 HSCORE_FILE = "highscores.json"
