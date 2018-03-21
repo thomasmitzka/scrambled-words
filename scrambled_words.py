@@ -41,7 +41,10 @@ class ScrambledWords():
 
     @staticmethod
     def get_words():
-        """Read words from file and return a list of random words."""
+        """Read words from file and return a list of random words.
+
+        The list contains one word for each level.
+        """
         try:
             with open(WORD_FILE, "r") as word_file:
                 lines = [line.strip().split(",") for line in word_file]
@@ -56,6 +59,7 @@ class ScrambledWords():
         scrambled_words = []
         for word in self.words:
             scrambled_word = word
+            # Make sure that the letter order is shuffled.
             while scrambled_word == word:
                 letters = list(scrambled_word)
                 random.shuffle(letters)
@@ -81,7 +85,7 @@ class ScrambledWords():
         word = self.words[self.level - 1]
         guesses = MAX_GUESSES
 
-        # Save start time:
+        # Save start time.
         start = time.time()
 
         print("\n== Level {} of {} ({} points) ==".format(
@@ -113,7 +117,7 @@ class ScrambledWords():
         print("\nThe word was: {}".format(word))
 
         if user_input == word:
-            # Save finish and level time:
+            # Save finish and level time.
             finish = time.time()
             self.times.append(round((finish - start), 1))
 
@@ -129,8 +133,8 @@ class ScrambledWords():
     def create_hint(word):
         """Create and return new string as a hint.
 
-        Take the correct word as argument. Keep the first three
-        letters, and shuffle the rest.
+        Take the correct word as argument. Keep the first three letters,
+        and shuffle the rest.
         """
         letters = list(word)
         part1 = letters[:3]
@@ -144,9 +148,9 @@ class ScrambledWords():
     def show_score(self):
         """Calculate and show level scores and total score.
 
-        A level time of 0 means that the word was not solved.
-        Add bonus points if the level time doesn't exceed the
-        time limit.
+        A level time of 0 means that the word was not solved. Each
+        solved word is worth 10 times its level number. Double that
+        amount if the level time doesn't exceed the time limit.
         """
         points = []
         bonus = []
@@ -259,7 +263,6 @@ class ScrambledWords():
         Make sure the word file is available and contains enough lines
         for the chosen number of levels.
         """
-
         if not self.words:
             print("The word file {} couldn't be read!".format(WORD_FILE))
             print("Rename it or change the expected file name (WORD_FILE).")
