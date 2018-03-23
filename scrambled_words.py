@@ -207,6 +207,7 @@ class ScrambledWords():
         except FileNotFoundError:
             scorelist = []
 
+        # Add a new highscore.
         if self.score:
             if (len(scorelist) < 10) or (self.score >= scorelist[-1][0]):
                 scorelist = self.add_highscore(scorelist)
@@ -214,8 +215,8 @@ class ScrambledWords():
         time.sleep(4)
         print("\n== Highscores: ==\n")
         if scorelist:
-            for entry in scorelist:
-                print("{}\t{}".format(entry[0], entry[1]))
+            for rank, entry in enumerate(scorelist, 1):
+                print("{}.\t{}\t{}".format(rank, entry[0], entry[1]))
             print()
         else:
             print("No entries yet.")
