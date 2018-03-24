@@ -34,31 +34,30 @@ class ScrambledWordsTestCase(unittest.TestCase):
 
     def test_reset_game(self):
         """Are attributes reset when the user chooses to play again?"""
+        # Test reset of current level number.
         self.sw.current_level = 1
         self.sw.reset_game()
         self.assertEqual(0, self.sw.current_level)
 
+        # Test reset of word list.
+        # There is a slight chance that the same list is re-created.
         words = self.sw.words
         self.sw.reset_game()
         self.assertNotEqual(words, self.sw.words)
 
+        # Test reset of scrambled word list.
+        # There is a slight chance that the same list is re-created.
         scrambled_words = self.sw.scrambled_words
         self.sw.scrambled_words = []
         self.sw.reset_game()
         self.assertNotEqual(scrambled_words, self.sw.scrambled_words)
 
+        # Test reset of level times.
         self.sw.level_times = [2.4, 13.0, 0]
         self.sw.reset_game()
         self.assertFalse(self.sw.level_times)
 
+        # Test reset of hint flag.
         self.sw.hint = False
         self.sw.reset_game()
         self.assertTrue(self.sw.hint)
-
-    def test_reset_words(self):
-        """Is the current level reset for a new game?"""
-        self.sw.current_level = 1
-        self.sw.reset_game()
-
-
-unittest.main()
