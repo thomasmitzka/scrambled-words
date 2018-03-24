@@ -24,16 +24,17 @@ class ScrambledWords():
     def __init__(self):
         """Initialize class variables.
 
-        Call methods get_words() and scramble() to create a list
-        of scrambled words.
+        Call methods get_words() and scramble() for the first time to
+        create a list of scrambled words.
         """
         self.words = self.get_words()
         if self.words:
             self.scrambled_words = self.scramble()
         self.level = 0
-        self.hint = True
         self.times = []
+        self.hint = True
         self.score = 0
+        self.continue_game = True
 
     def __repr__(self):
         """Provide information on this class."""
@@ -258,12 +259,19 @@ class ScrambledWords():
             print("Highscore file updated.")
         return scorelist
 
+    def reset_game(self):
+        """Reset game attributes for a new game."""
+        self.level = 0
+        self.words = self.get_words()
+        self.scrambled_words = self.scramble()
+
     def play(self):
         """Show instructions and call game methods.
 
         Make sure the word file is available and contains enough lines
         for the chosen number of levels.
         """
+        # Check for errors.
         if not self.words:
             print("The word file {} couldn't be read!".format(WORD_FILE))
             print("Rename it or change the expected file name (WORD_FILE).")
@@ -275,6 +283,7 @@ class ScrambledWords():
             print("in your word file: {}".format(WORD_FILE))
         else:
 
+            # Show introduction and instructions.
             print("Welcome to SCRAMBLED WORDS.")
             if INSTRUCTIONS:
                 print("\nEarn points for each word you can uncramble.")
@@ -285,11 +294,23 @@ class ScrambledWords():
                 print("\nDo your best and try to enter the highscore list!")
                 time.sleep(6)
 
-            while self.level < LEVELS:
-                self.next_level()
-                self.challenge()
-            self.show_score()
-            self.show_highscores()
+            # Run game loop.
+            while self.continue_game:
+                while self.level < LEVELS:
+                    self.next_level()
+                    self.challenge()
+                self.show_score()
+                self.show_highscores()
+
+                # Ask the user whether to start a new game.
+                answer = None
+                while answer not in ("y", "yes", "n", "no"):
+                    answer = input("Do you want to play again? (y/n) ").lower()
+                if answer in ("y", "yes"):
+                    self.reset_game()
+                else:
+                    print("Thanks for playing!")
+                    self.continue_game = False
 
 
 ######################################################################

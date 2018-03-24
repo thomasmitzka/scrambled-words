@@ -31,4 +31,8 @@ class ScrambledWordsTestCase(unittest.TestCase):
         self.assertEqual(word[:3], hint[:3])
         self.assertNotEqual(word[3:], hint[3:])
 
+    def test_reset_game(self):
+        """Are attributes reset for a new game?"""
+        self.assertEqual(0, self.sw.level)
+
 unittest.main()
