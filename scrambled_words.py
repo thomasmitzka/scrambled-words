@@ -47,11 +47,11 @@ class ScrambledWords():
         """
         try:
             with open(WORD_FILE, "r") as word_file:
-                lines = [line.strip().split(",") for line in word_file]
+                word_lists = [line.strip().split(",") for line in word_file]
         except FileNotFoundError:
             return None
         else:
-            words = [random.choice(element).upper() for element in lines]
+            words = [random.choice(w_list).upper() for w_list in word_lists]
             return words
 
     def scramble(self):
