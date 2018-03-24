@@ -48,7 +48,6 @@ class ScrambledWordsTestCase(unittest.TestCase):
         # Test reset of scrambled word list.
         # There is a slight chance that the same list is re-created.
         scrambled_words = self.sw.scrambled_words
-        self.sw.scrambled_words = []
         self.sw.reset_game()
         self.assertNotEqual(scrambled_words, self.sw.scrambled_words)
 
@@ -61,3 +60,6 @@ class ScrambledWordsTestCase(unittest.TestCase):
         self.sw.hint = False
         self.sw.reset_game()
         self.assertTrue(self.sw.hint)
+
+
+unittest.main()
