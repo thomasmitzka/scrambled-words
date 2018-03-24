@@ -262,7 +262,6 @@ class ScrambledWords():
         if scorelist:
             for rank, entry in enumerate(scorelist, 1):
                 print("{}.\t{}\t{}".format(rank, entry[0], entry[1]))
-            print()
         else:
             print("No entries yet.")
             print("Start a new game and achieve the first highscore!")
@@ -315,7 +314,7 @@ class ScrambledWords():
                 # Ask the user whether to start a new game.
                 answer = None
                 while answer not in ("y", "yes", "n", "no"):
-                    answer = input("Do you want to play again? (y/n) ").lower()
+                    answer = input("\nDo you want to play again? (y/n) ").lower()
                 if answer in ("y", "yes"):
                     self.reset_game()
                 else:
