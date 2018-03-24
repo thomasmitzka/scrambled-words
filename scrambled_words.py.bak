@@ -30,8 +30,7 @@ class ScrambledWords():
         self.words = self.get_words()
         if self.words:
             self.scrambled_words = self.scramble()
-            self.total_levels = len(self.words)
-        self.current_level = 0
+        self.level = 0
         self.times = []
         self.hint = True
         self.score = 0
@@ -71,8 +70,8 @@ class ScrambledWords():
 
     def next_level(self):
         """Raise level counter and start countdown to next level."""
-        self.current_level += 1
-        print("Get ready for level {} ...".format(self.current_level))
+        self.level += 1
+        print("Get ready for level {} ...".format(self.level))
         time.sleep(4)
 
     def challenge(self):
@@ -83,15 +82,15 @@ class ScrambledWords():
         less than five letters, because create_hint() corrects the
         first three letters.
         """
-        scrambled_word = self.scrambled_words[self.current_level - 1]
-        word = self.words[self.current_level - 1]
+        scrambled_word = self.scrambled_words[self.level - 1]
+        word = self.words[self.level - 1]
         guesses = MAX_GUESSES
 
         # Save start time.
         start = time.time()
 
         print("\n== Level {} of {} ({} points) ==".format(
-            self.current_level, self.total_levels, self.current_level * 10
+            self.level, LEVELS, self.level * 10
         ))
 
         user_input = ""
@@ -157,7 +156,7 @@ class ScrambledWords():
         points = []
         bonus = []
 
-        for i in range(self.total_levels):
+        for i in range(LEVELS):
             if self.times[i]:
                 points.append((i + 1) * 10)
 
@@ -173,7 +172,7 @@ class ScrambledWords():
         time.sleep(4)
         print("\n== Results: ==")
         print("\nLvl\tPts\tBonus\tTime (sec)")
-        for i in range(self.total_levels):
+        for i in range(LEVELS):
             print("{}\t{}\t{}\t".format(i + 1, points[i], bonus[i]), end="")
             if self.times[i] > 0:
                 print(self.times[i])
@@ -196,7 +195,7 @@ class ScrambledWords():
         lowest (= last) entry in the list.
         """
         try:
-            with open("highscores.json", "r") as hscore_file:
+            with open(HSCORE_FILE, "r") as hscore_file:
                 scorelist = json.load(hscore_file)
 
                 # Convert score numbers from string to integer,
@@ -252,7 +251,7 @@ class ScrambledWords():
             converted_scorelist.append([str(points), player])
         scorelist = converted_scorelist
 
-        with open("highscores.json", "w") as hscore_file:
+        with open(HSCORE_FILE, "w") as hscore_file:
             json.dump(scorelist, hscore_file)
         if len(scorelist) == 1:
             print("Highscore file created.")
@@ -262,16 +261,26 @@ class ScrambledWords():
 
     def reset_game(self):
         """Reset game attributes for a new game."""
-        self.current_level = 0
+        self.level = 0
         self.words = self.get_words()
         self.scrambled_words = self.scramble()
 
     def play(self):
-        """Show instructions and call game methods."""
-        # Check whether words are available.
+        """Show instructions and call game methods.
+
+        Make sure the word file is available and contains enough lines
+        for the chosen number of levels.
+        """
+        # Check for errors.
         if not self.words:
             print("The word file {} couldn't be read!".format(WORD_FILE))
             print("Rename it or change the expected file name (WORD_FILE).")
+        elif LEVELS > len(self.words):
+            print("There are only {} sets of words for {} levels!".format(
+                len(self.words), LEVELS
+            ))
+            print("Please set a lower level number or add more lines")
+            print("in your word file: {}".format(WORD_FILE))
         else:
 
             # Show introduction and instructions.
@@ -287,7 +296,7 @@ class ScrambledWords():
 
             # Run game loop.
             while self.continue_game:
-                while self.current_level < self.total_levels:
+                while self.level < LEVELS:
                     self.next_level()
                     self.challenge()
                 self.show_score()
@@ -311,6 +320,9 @@ class ScrambledWords():
 # Show instructions at the beginning:
 INSTRUCTIONS = True
 
+# Number of levels (must not exceed the number of lines in word file):
+LEVELS = 6
+
 # Maximum number of guesses per word:
 MAX_GUESSES = 2
 
@@ -319,6 +331,9 @@ TIME_LIMIT = 10
 
 # Name of word file:
 WORD_FILE = "words_en.txt"
+
+# Name of highscore file (will be created if required):
+HSCORE_FILE = "highscores.json"
 
 ######################################################################
 

@@ -21,6 +21,7 @@ class ScrambledWordsTestCase(unittest.TestCase):
 
     def test_scramble(self):
         """Are all scrambled words different than the original ones?"""
+        self.assertTrue(self.sw.scrambled_words)
         for scrambled_word in self.sw.scrambled_words:
             self.assertNotIn(scrambled_word, self.sw.words)
 
@@ -33,6 +34,8 @@ class ScrambledWordsTestCase(unittest.TestCase):
 
     def test_reset_game(self):
         """Are attributes reset for a new game?"""
-        self.assertEqual(0, self.sw.level)
+        self.assertEqual(0, self.sw.current_level)
+        self.sw.reset_game()
+        self.assertEqual(0, self.sw.current_level)
 
 unittest.main()
