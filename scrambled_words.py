@@ -25,7 +25,8 @@ class ScrambledWords():
         """Initialize class variables.
 
         Call methods get_words() and scramble() for the first time to
-        create a list of scrambled words.
+        create a list of scrambled words. The number of levels depends
+        on the number of lines in the word file.
         """
         self.words = self.get_words()
         if self.words:
