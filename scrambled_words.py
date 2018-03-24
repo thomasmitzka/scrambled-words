@@ -104,6 +104,7 @@ class ScrambledWords():
                     if len(word) > 4:
                         scrambled_word = self.create_hint(word)
                         self.hint = False
+                        print("You requested a hint. Here it comes:")
                     else:
                         print("This word is too short to use the hint option.")
                         print("Try to unscramble it on your own.")
@@ -139,10 +140,9 @@ class ScrambledWords():
         letters = list(word)
         part1 = letters[:3]
         part2 = letters[3:]
+        # Make sure that the letter order is shuffled.
         while part2 == letters[3:]:
             random.shuffle(part2)
-
-        print("You requested a hint. Here it comes:")
         return "".join(part1) + "".join(part2)
 
     def show_score(self):
