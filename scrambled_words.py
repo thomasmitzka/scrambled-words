@@ -33,9 +33,8 @@ class ScrambledWords():
             self.scrambled_words = self.scramble()
             self.total_levels = len(self.words)
         self.current_level = 0
-        self.times = []
+        self.level_times = []
         self.hint = True
-        self.score = 0
         self.continue_game = True
 
     def __repr__(self):
@@ -123,14 +122,14 @@ class ScrambledWords():
         if user_input == word:
             # Save finish and level time.
             finish = time.time()
-            self.times.append(round((finish - start), 1))
+            self.level_times.append(round((finish - start), 1))
 
             print(random.choice(("Well done!", "Great!", "Awesome!")), end=" ")
             print("You finished this level in {} seconds.".format(
-                self.times[-1]
+                self.level_times[-1]
             ))
         else:
-            self.times.append(0)
+            self.level_times.append(0)
             print("You didn't guess this one.")
 
     @staticmethod
@@ -148,46 +147,53 @@ class ScrambledWords():
             random.shuffle(part2)
         return "".join(part1) + "".join(part2)
 
-    def show_score(self):
-        """Calculate and show level scores and total score.
+    def get_score(self):
+        """Calculate regular and bonus points per level, and the total score.
 
         A level time of 0 means that the word was not solved. Each
         solved word is worth 10 times its level number. Double that
         amount if the level time doesn't exceed the time limit.
         """
-        points = []
-        bonus = []
+        level_points = []
+        level_bonus = []
+        score = 0
 
         for i in range(self.total_levels):
-            if self.times[i]:
-                points.append((i + 1) * 10)
+            if self.level_times[i]:
+                level_points.append((i + 1) * 10)
 
-                if self.times[i] <= TIME_LIMIT:
-                    bonus.append((i + 1) * 10)
+                if self.level_times[i] <= TIME_LIMIT:
+                    level_bonus.append((i + 1) * 10)
                 else:
-                    bonus.append(0)
+                    level_bonus.append(0)
 
             else:
-                points.append(0)
-                bonus.append(0)
+                level_points.append(0)
+                level_bonus.append(0)
 
+        for amount in level_points:
+            score += amount
+        for amount in level_bonus:
+            score += amount
+        return level_points, level_bonus, score
+
+    def show_results(self, level_points, level_bonus, score):
+        """Show the player's results."""
         time.sleep(4)
         print("\n== Results: ==")
         print("\nLvl\tPts\tBonus\tTime (sec)")
         for i in range(self.total_levels):
-            print("{}\t{}\t{}\t".format(i + 1, points[i], bonus[i]), end="")
-            if self.times[i] > 0:
-                print(self.times[i])
+            print("{}\t{}\t{}\t".format(
+                i + 1, level_points[i], level_bonus[i]), end=""
+                 )
+            if self.level_times[i] > 0:
+                print(self.level_times[i])
             else:
                 print("-")
+        print("\nYour total score: {}".format(score))
 
-        for level_points in points:
-            self.score += level_points
-        for level_bonus in bonus:
-            self.score += level_bonus
-        print("\nYour total score: {}".format(self.score))
-
-    def show_highscores(self):
+    @staticmethod
+    def get_highscores():
         """Read highscores from file and show them.
 
         If a new highscore has been achieved, save the player's name
@@ -209,23 +215,10 @@ class ScrambledWords():
                 scorelist = converted_scorelist
         except FileNotFoundError:
             scorelist = []
+        return scorelist
 
-        # Add a new highscore.
-        if self.score:
-            if (len(scorelist) < 10) or (self.score >= scorelist[-1][0]):
-                scorelist = self.add_highscore(scorelist)
-
-        time.sleep(4)
-        print("\n== Highscores: ==\n")
-        if scorelist:
-            for rank, entry in enumerate(scorelist, 1):
-                print("{}.\t{}\t{}".format(rank, entry[0], entry[1]))
-            print()
-        else:
-            print("No entries yet.")
-            print("Start a new game and achieve the first highscore!")
-
-    def add_highscore(self, scorelist):
+    @staticmethod
+    def add_highscore(score, scorelist):
         """Add a new highscore, write list to file, and return list.
 
         If the list already contains ten or more highscore entries,
@@ -242,7 +235,7 @@ class ScrambledWords():
         while len(scorelist) >= 10:
             scorelist.pop()
 
-        scorelist.append([self.score, player])
+        scorelist.append([score, player])
         scorelist = sorted(scorelist, reverse=True)
 
         # Convert score numbers from integer to string,
@@ -261,11 +254,26 @@ class ScrambledWords():
             print("Highscore file updated.")
         return scorelist
 
+    @staticmethod
+    def show_highscores(scorelist):
+        """Show highscores."""
+        time.sleep(4)
+        print("\n== Highscores: ==\n")
+        if scorelist:
+            for rank, entry in enumerate(scorelist, 1):
+                print("{}.\t{}\t{}".format(rank, entry[0], entry[1]))
+            print()
+        else:
+            print("No entries yet.")
+            print("Start a new game and achieve the first highscore!")
+
     def reset_game(self):
-        """Reset game attributes for a new game."""
+        """Reset game attributes to start a new game."""
         self.current_level = 0
         self.words = self.get_words()
         self.scrambled_words = self.scramble()
+        self.level_times = []
+        self.hint = True
 
     def play(self):
         """Show instructions and call game methods."""
@@ -291,8 +299,18 @@ class ScrambledWords():
                 while self.current_level < self.total_levels:
                     self.next_level()
                     self.challenge()
-                self.show_score()
-                self.show_highscores()
+
+                # Show results.
+                level_points, level_bonus, score = self.get_score()
+                self.show_results(level_points, level_bonus, score)
+
+                scorelist = self.get_highscores()
+                # Add a new highscore.
+                if score:
+                    if (len(scorelist) < 10) or (score >= scorelist[-1][0]):
+                        scorelist = self.add_highscore(score, scorelist)
+                # Show highscores.
+                self.show_highscores(scorelist)
 
                 # Ask the user whether to start a new game.
                 answer = None
