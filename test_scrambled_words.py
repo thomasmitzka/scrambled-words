@@ -40,13 +40,13 @@ class ScrambledWordsTestCase(unittest.TestCase):
         self.assertEqual(0, self.sw.current_level)
 
         # Test reset of word list.
-        # There is a slight chance that the same list is re-created.
+        # There is a slight chance that the same list is created again.
         words = self.sw.words
         self.sw.reset_game()
         self.assertNotEqual(words, self.sw.words)
 
         # Test reset of scrambled word list.
-        # There is a slight chance that the same list is re-created.
+        # There is a slight chance that the same list is created again.
         scrambled_words = self.sw.scrambled_words
         self.sw.reset_game()
         self.assertNotEqual(scrambled_words, self.sw.scrambled_words)
