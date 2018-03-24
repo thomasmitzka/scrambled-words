@@ -324,7 +324,7 @@ class ScrambledWords():
 
 ######################################################################
 
-# OPTIONS AND FILE NAMES
+# OPTIONS
 
 # Show instructions at the beginning:
 INSTRUCTIONS = True
