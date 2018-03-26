@@ -147,7 +147,7 @@ class ScrambledWords():
             random.shuffle(part2)
         return "".join(part1) + "".join(part2)
 
-    def get_score(self):
+    def get_results(self):
         """Calculate regular and bonus points per level, and the total score.
 
         A level time of 0 means that the word was not solved. Each
@@ -300,7 +300,7 @@ class ScrambledWords():
                     self.challenge()
 
                 # Show results.
-                level_points, level_bonus, score = self.get_score()
+                level_points, level_bonus, score = self.get_results()
                 self.show_results(level_points, level_bonus, score)
 
                 scorelist = self.get_highscores()
