@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """Scrambled Words is a text-based word guessing game.
 
 For further information on this game and how to play it, please read the
