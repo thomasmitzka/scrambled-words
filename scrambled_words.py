@@ -310,9 +310,9 @@ class ScrambledWords():
                 self.show_highscores(scorelist)
 
                 # Ask the user whether to start a new game.
-                answer = None
+                answer = ""
                 while answer not in ("y", "yes", "n", "no"):
-                    answer = input("\nDo you want to play again? (y/n) ").lower()
+                    answer = input("\nPlay again? (y/n) ").lower()
                 if answer in ("y", "yes"):
                     self.reset_game()
                 else:
