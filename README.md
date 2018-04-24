@@ -8,8 +8,7 @@ number of guesses, the level ends.
 
 Once in every game, you can get a hint by pressing "H". When all levels
 are completed, you receive points for solved words, and bonus points for
-guessing words within a time limit. Highscore entries are stored in a
-JSON file.
+guessing words within a time limit.
 
 Word files in English and German are included. If you change them or
 create your own word files, make sure that there are only commas between
