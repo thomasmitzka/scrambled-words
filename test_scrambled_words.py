@@ -1,65 +1,56 @@
-"""Tests for the module 'scrambled_words.py'
+"""Use these tests to make sure the class methods work as expected."""
 
-Use these tests to make sure the class methods work as expected.
-"""
-
-import unittest
-
+import pytest
 from scrambled_words import ScrambledWords
 
+@pytest.fixture
+def sw():
+    """Create an instance of ScrambledWords for all test functions."""
+    sw = ScrambledWords()
+    return sw
 
-class ScrambledWordsTestCase(unittest.TestCase):
-    """A test case for the class ScrambledWords."""
+def test_get_words(sw):
+    """Are words read from the word file?"""
+    assert sw.words
 
-    def setUp(self):
-        """Create a class instance for all following tests."""
-        self.swords = ScrambledWords()
+def test_scramble(sw):
+    """Are all scrambled words different than the original ones?"""
+    assert sw.scrambled_words
+    for scrambled_word in sw.scrambled_words:
+        assert scrambled_word not in sw.words
 
-    def test_get_words(self):
-        """Are words read from the word file?"""
-        self.assertTrue(self.swords.words)
+def test_create_hint(sw):
+    """Is the hint for a word created correctly?"""
+    word = "apple"
+    hint = sw.create_hint(word)
+    assert word[:3] == hint[:3]
+    assert word[3:] != hint[3:]
 
-    def test_scramble(self):
-        """Are all scrambled words different than the original ones?"""
-        self.assertTrue(self.swords.scrambled_words)
-        for scrambled_word in self.swords.scrambled_words:
-            self.assertNotIn(scrambled_word, self.swords.words)
+def test_reset_game(sw):
+    """Are attributes reset when the user chooses to play again?"""
+    # Test reset of current level number.
+    sw.current_level = 1
+    sw.reset_game()
+    assert sw.current_level == 0
 
-    def test_create_hint(self):
-        """Is the hint for a word created correctly?"""
-        word = "apple"
-        hint = self.swords.create_hint(word)
-        self.assertEqual(word[:3], hint[:3])
-        self.assertNotEqual(word[3:], hint[3:])
+    # Test reset of word list.
+    # There is a slight chance that the same list is created again.
+    words = sw.words
+    sw.reset_game()
+    assert words != sw.words
 
-    def test_reset_game(self):
-        """Are attributes reset when the user chooses to play again?"""
-        # Test reset of current level number.
-        self.swords.current_level = 1
-        self.swords.reset_game()
-        self.assertEqual(0, self.swords.current_level)
+    # Test reset of scrambled word list.
+    # There is a slight chance that the same list is created again.
+    scrambled_words = sw.scrambled_words
+    sw.reset_game()
+    assert scrambled_words != sw.scrambled_words
 
-        # Test reset of word list.
-        # There is a slight chance that the same list is created again.
-        words = self.swords.words
-        self.swords.reset_game()
-        self.assertNotEqual(words, self.swords.words)
+    # Test reset of level times.
+    sw.level_times = [2.4, 13.0, 0]
+    sw.reset_game()
+    assert not sw.level_times
 
-        # Test reset of scrambled word list.
-        # There is a slight chance that the same list is created again.
-        scrambled_words = self.swords.scrambled_words
-        self.swords.reset_game()
-        self.assertNotEqual(scrambled_words, self.swords.scrambled_words)
-
-        # Test reset of level times.
-        self.swords.level_times = [2.4, 13.0, 0]
-        self.swords.reset_game()
-        self.assertFalse(self.swords.level_times)
-
-        # Test reset of hint flag.
-        self.swords.hint = False
-        self.swords.reset_game()
-        self.assertTrue(self.swords.hint)
-
-
-unittest.main()
+    # Test reset of hint flag.
+    sw.hint = False
+    sw.reset_game()
+    assert sw.hint
