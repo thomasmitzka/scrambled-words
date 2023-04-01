@@ -46,7 +46,7 @@ class ScrambledWords():
         The list contains one word for each level.
         """
         try:
-            with open(WORD_FILE, "r") as word_file:
+            with open(WORD_FILE, "r", encoding="utf-8") as word_file:
                 word_lists = [line.strip().split(",") for line in word_file]
         except FileNotFoundError:
             return None
@@ -70,7 +70,7 @@ class ScrambledWords():
     def next_level(self):
         """Raise level counter and start countdown to next level."""
         self.current_level += 1
-        print("Get ready for level {} ...".format(self.current_level))
+        print(f"Get ready for level {self.current_level} ...")
         time.sleep(4)
 
     def challenge(self):
@@ -88,14 +88,13 @@ class ScrambledWords():
         # Save start time.
         start = time.time()
 
-        print("\n== Level {} of {} ({} points) ==".format(
-            self.current_level, self.total_levels, self.current_level * 10
-        ))
+        print(f"\n== Level {self.current_level} of {self.total_levels} "
+              f"({self.current_level * 10} points) ==")
 
         user_input = ""
         while (user_input != word) and (guesses > 0):
-            print("\n{}".format(scrambled_word))
-            print("Remaining guesses: {}".format(guesses))
+            print(f"\n{scrambled_word}")
+            print(f"Remaining guesses: {guesses}")
 
             user_input = input("> ").upper()
 
@@ -115,7 +114,7 @@ class ScrambledWords():
                 if guesses:
                     print("\nTry again.")
 
-        print("\nThe word was: {}".format(word))
+        print(f"\nThe word was: {word}")
 
         if user_input == word:
             # Save finish and level time.
@@ -123,9 +122,8 @@ class ScrambledWords():
             self.level_times.append(round((finish - start), 1))
 
             print(random.choice(("Well done!", "Great!", "Awesome!")), end=" ")
-            print("You finished this level in {} seconds.".format(
-                self.level_times[-1]
-            ))
+            print(f"You finished this level in {self.level_times[-1]} "
+                  "seconds.")
         else:
             self.level_times.append(0)
             print("You didn't guess this one.")
@@ -181,14 +179,12 @@ class ScrambledWords():
         print("\n== Results: ==")
         print("\nLvl\tPts\tBonus\tTime (sec)")
         for i in range(self.total_levels):
-            print("{}\t{}\t{}\t".format(
-                i + 1, level_points[i], level_bonus[i]), end=""
-                 )
+            print(f"{i + 1}\t{level_points[i]}\t{level_bonus[i]}\t")
             if self.level_times[i] > 0:
                 print(self.level_times[i])
             else:
                 print("-")
-        print("\nYour total score: {}".format(score))
+        print(f"\nYour total score: {score}")
 
     @staticmethod
     def get_highscores():
@@ -201,7 +197,7 @@ class ScrambledWords():
         lowest (= last) entry in the list.
         """
         try:
-            with open("highscores.json", "r") as hscore_file:
+            with open("highscores.json", "r", encoding="utf-8") as hscore_file:
                 scorelist = json.load(hscore_file)
 
                 # Convert score numbers from string to integer,
@@ -228,7 +224,7 @@ class ScrambledWords():
         player = ""
         while player == "":
             player = input("> ")
-        print("\nCongratulations, {}!".format(player))
+        print(f"\nCongratulations, {player}!")
 
         while len(scorelist) >= 10:
             scorelist.pop()
@@ -244,7 +240,7 @@ class ScrambledWords():
             converted_scorelist.append([str(points), player])
         scorelist = converted_scorelist
 
-        with open("highscores.json", "w") as hscore_file:
+        with open("highscores.json", "w", encoding="utf-8") as hscore_file:
             json.dump(scorelist, hscore_file)
         if len(scorelist) == 1:
             print("Highscore file created.")
@@ -259,7 +255,7 @@ class ScrambledWords():
         print("\n== Highscores: ==\n")
         if scorelist:
             for rank, entry in enumerate(scorelist, 1):
-                print("{}.\t{}\t{}".format(rank, entry[0], entry[1]))
+                print(f"{rank}.\t{entry[0]}\t{entry[1]}")
         else:
             print("No entries yet.")
             print("Start a new game and achieve the first highscore!")
@@ -276,7 +272,7 @@ class ScrambledWords():
         """Show instructions and call game methods."""
         # Check whether words are available.
         if not self.words:
-            print("The word file {} couldn't be read!".format(WORD_FILE))
+            print(f"The word file {WORD_FILE} couldn't be read!")
             print("Rename it or change the expected file name (WORD_FILE).")
         else:
 
@@ -284,9 +280,7 @@ class ScrambledWords():
             print("Welcome to SCRAMBLED WORDS.")
             if INSTRUCTIONS:
                 print("\nEarn points for each word you can uncramble.")
-                print("If you can do it in {} seconds or less,".format(
-                    TIME_LIMIT
-                ))
+                print(f"If you can do it in {TIME_LIMIT} seconds or less,")
                 print("you receive bonus points. Press 'H' to see a hint.")
                 print("\nDo your best and try to enter the highscore list!")
                 time.sleep(6)
@@ -343,6 +337,7 @@ def main():
     """Start the game."""
     sw_game = ScrambledWords()
     sw_game.play()
+
 
 if __name__ == "__main__":
     main()
