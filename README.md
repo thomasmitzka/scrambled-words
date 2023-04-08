@@ -14,5 +14,6 @@ Word files in English and German are included. If you change them or
 create your own word files, make sure that there are only commas between
 words, no empty spaces or other characters.
 
-Scrambled Words requires Python 3.6 or higher. The test case uses the Pytest
-framework.
+Scrambled Words requires Python 3.6+. The test case uses the pytest
+framework which is not included in the Python standard library and
+requires Python 3.7+.
