@@ -72,7 +72,7 @@ class ScrambledWords():
         """Raise level counter and start countdown to next level."""
         self.current_level += 1
         print(f"Get ready for level {self.current_level} ...")
-        time.sleep(4)
+        time.sleep(3)
 
     def challenge(self):
         """Show scrambled word, take user input, and measure time.
@@ -176,7 +176,7 @@ class ScrambledWords():
 
     def show_results(self, level_points, level_bonus, score):
         """Show the player's results."""
-        time.sleep(4)
+        time.sleep(3)
         print("\n== Results: ==")
         print("\nLvl\tPts\tBonus\tTime (sec)")
         for i in range(self.total_levels):
@@ -252,7 +252,7 @@ class ScrambledWords():
     @staticmethod
     def show_highscores(scorelist):
         """Show highscores."""
-        time.sleep(4)
+        time.sleep(3)
         print("\n== Highscores: ==\n")
         if scorelist:
             for rank, entry in enumerate(scorelist, 1):
@@ -284,7 +284,7 @@ class ScrambledWords():
                 print(f"If you can do it in {TIME_LIMIT} seconds or less,")
                 print("you receive bonus points. Press 'H' to see a hint.")
                 print("\nDo your best and try to enter the highscore list!")
-                time.sleep(6)
+                time.sleep(4)
 
             # Run game loop.
             while self.continue_game:
