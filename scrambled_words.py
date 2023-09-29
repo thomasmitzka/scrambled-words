@@ -180,7 +180,7 @@ class ScrambledWords():
         print("\n== Results: ==")
         print("\nLvl\tPts\tBonus\tTime (sec)")
         for i in range(self.total_levels):
-            print(f"{i + 1}\t{level_points[i]}\t{level_bonus[i]}\t")
+            print(f"{i + 1}\t{level_points[i]}\t{level_bonus[i]}\t", end="")
             if self.level_times[i] > 0:
                 print(self.level_times[i])
             else:
